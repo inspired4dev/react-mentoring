@@ -1,6 +1,5 @@
-import React from 'react';
-import { Header, MoviesList } from './components';
-import { Footer } from './components/Footer';
+import React, { useState } from 'react';
+import { Header, ModalAdd, MoviesList, Footer } from './components';
 import { MovieCardProps } from './components/shared/MovieCard/MovieCard';
 
 const moviesMock: MovieCardProps[] = [
@@ -47,11 +46,17 @@ const moviesMock: MovieCardProps[] = [
 ];
 
 function App() {
+  const [showAdd, setShowAdd] = useState(false);
   return (
     <>
-      <Header />
+      <Header handleOnAdd={() => setShowAdd(true)} />
       <MoviesList movies={moviesMock} />
       <Footer />
+      <ModalAdd
+        handleClose={() => setShowAdd(false)}
+        show={showAdd}
+        title='Add'
+      />
     </>
   );
 }

@@ -11,7 +11,7 @@ export const Input = styled.input<IStyledInput>`
     50,
     ${(props) => (props.transparency ? 0.8 : 1)}
   );
-  height: 57px;
+  height: ${(props) => props.height};
   width: 100%;
   border-radius: 4px;
   border: none;
@@ -22,8 +22,10 @@ export const Input = styled.input<IStyledInput>`
   line-height: 24px;
   color: #ffffff;
   z-index: 1;
+  vertical-align: top;
 `;
 
 Input.defaultProps = {
   transparency: false,
+  height: '57px',
 };

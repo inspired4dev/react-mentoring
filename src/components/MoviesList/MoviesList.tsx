@@ -1,6 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-import { Container } from '..';
+import { Container, ModalAdd, ModalDelete } from '..';
 import { MovieCard } from '../shared';
 import { ButtonGroup } from '../shared/ButtonGroup';
 import { MovieCardProps } from '../shared/MovieCard/MovieCard';
@@ -28,6 +28,8 @@ const Row = styled.div`
 `;
 
 export const MoviesList = ({ movies = [] }: MoviesListProps) => {
+  const [showAdd, setShowAdd] = useState(false);
+  const [showDelete, setShowDelete] = useState(false);
   return (
     <Container>
       <Row>
@@ -43,9 +45,24 @@ export const MoviesList = ({ movies = [] }: MoviesListProps) => {
       </Row>
       <MoviesContainer>
         {movies.map((movie) => (
-          <MovieCard key={movie.title} {...movie} />
+          <MovieCard
+            handleEdit={() => setShowAdd(true)}
+            handleDelete={() => setShowDelete(true)}
+            key={movie.title}
+            {...movie}
+          />
         ))}
       </MoviesContainer>
+      <ModalAdd
+        handleClose={() => setShowAdd(false)}
+        show={showAdd}
+        title='Edit'
+      />
+      <ModalDelete
+        handleClose={() => setShowDelete(false)}
+        show={showDelete}
+        title='Delete'
+      />
     </Container>
   );
 };

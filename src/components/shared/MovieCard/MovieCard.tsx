@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { ReactComponent as Ellipsis } from '../../../assets/images/Group 2.svg';
@@ -59,8 +60,13 @@ export interface MovieCardProps {
   year?: string;
   genre?: string[];
   image?: string;
+  duration?: number;
+  description?: string;
   handleEdit?: () => void;
   handleDelete?: () => void;
+  handleSelect?: Function;
+  rating?: number;
+  onSearch?:Function;
 }
 
 interface Ellipsis {
@@ -117,6 +123,7 @@ export const MovieCard = ({
   image = 'https://www.publicdomainpictures.net/pictures/280000/nahled/not-found-image-15383864787lu.jpg',
   handleEdit,
   handleDelete,
+  handleSelect,
 }: MovieCardProps) => {
   const [showEllipsis, setShowEllipsis] = useState<'none' | 'block'>('none');
   const [showMenu, setShowMenu] = useState<'none' | 'block'>('none');
@@ -124,6 +131,7 @@ export const MovieCard = ({
     <Container
       onMouseEnter={() => setShowEllipsis('block')}
       onMouseLeave={() => setShowEllipsis('none')}
+      onClickCapture={() => handleSelect?.()}
     >
       <EllipsisButton onClick={() => setShowMenu('block')} show={showEllipsis}>
         <Ellipsis />

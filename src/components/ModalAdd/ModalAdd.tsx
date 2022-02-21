@@ -6,6 +6,7 @@ import { ModalFrame } from '../shared/ModalFrame';
 
 interface IText {
   size?: string;
+  align?: 'flex-end' | 'flex-start';
 }
 
 export const Text = styled.p<IText>`
@@ -13,7 +14,7 @@ export const Text = styled.p<IText>`
   font-style: normal;
   font-weight: 300;
   font-size: ${(props) => props.size};
-  line-height: 49px;
+  line-height: ${(props) => props.size};
   letter-spacing: 1px;
   text-transform: uppercase;
   color: ${(props) => props.color};
@@ -29,14 +30,22 @@ export const Column = styled.div<IText>`
   display: flex;
   flex-direction: column;
   width: ${(props) => props.size};
+  gap: 1rem;
 `;
 
-export const Row = styled.div`
+export const Row = styled.div<IText>`
   display: flex;
   flex-direction: row;
+  align-items:center;
   gap: 2rem;
-  justify-content: flex-end;
+  justify-content: ${(props) => props.align};
+  padding: ${(props) => props.size};
 `;
+
+Row.defaultProps = {
+  size: '0',
+  align: 'flex-end',
+};
 
 interface ModalAddProps {
   title: string;
@@ -71,7 +80,7 @@ export const ModalAdd = ({ title, show, handleClose }: ModalAddProps) => {
           <Text size='16px' color='#F65261'>
             Runtime
           </Text>
-          <Input type='number'></Input>
+          <Input placeholder='minutes' type='number'></Input>
         </Column>
       </Row>
       <Text size='16px' color='#F65261'>

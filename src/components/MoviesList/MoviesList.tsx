@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/ban-types */
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Container, ModalAdd, ModalDelete } from '..';
@@ -7,6 +8,7 @@ import { MovieCardProps } from '../shared/MovieCard/MovieCard';
 
 interface MoviesListProps {
   movies?: MovieCardProps[];
+  selectMovie?: Function;
 }
 
 const MoviesContainer = styled.div`
@@ -27,7 +29,7 @@ const Row = styled.div`
   padding-bottom: 2rem;
 `;
 
-export const MoviesList = ({ movies = [] }: MoviesListProps) => {
+export const MoviesList = ({ movies = [], selectMovie }: MoviesListProps) => {
   const [showAdd, setShowAdd] = useState(false);
   const [showDelete, setShowDelete] = useState(false);
   return (
@@ -46,6 +48,7 @@ export const MoviesList = ({ movies = [] }: MoviesListProps) => {
       <MoviesContainer>
         {movies.map((movie) => (
           <MovieCard
+            handleSelect={() => selectMovie?.(movie)}
             handleEdit={() => setShowAdd(true)}
             handleDelete={() => setShowDelete(true)}
             key={movie.title}

@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
-
+import { ReactComponent as Ellipsis } from '../../../assets/images/Group 2.svg';
 export const Container = styled.div`
   display: flex;
   flex-direction: column;
   width: 320px;
+  position: relative;
 `;
 
 export const ImageContainer = styled.img`
@@ -58,16 +59,85 @@ export interface MovieCardProps {
   year?: string;
   genre?: string[];
   image?: string;
+  handleEdit?: () => void;
+  handleDelete?: () => void;
 }
+
+interface Ellipsis {
+  show?: 'none' | 'block';
+}
+
+const EllipsisButton = styled.button<Ellipsis>`
+  position: absolute;
+  right: 14px;
+  top: 14px;
+  cursor: pointer;
+  margin: 0;
+  background: transparent;
+  border: none;
+  display: ${(props) => props.show};
+`;
+EllipsisButton.defaultProps = {
+  show: 'none',
+};
+
+const Menu = styled.ul<Ellipsis>`
+  width: 190px;
+  display: flex;
+  flex-direction: column;
+  font-family: Montserrat;
+  font-style: normal;
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 20px;
+  color: #ffffff;
+  display: ${(props) => props.show};
+  & li {
+    padding-left: 1rem;
+  }
+  & li:hover {
+    background-color: #f65261;
+  }
+  position: absolute;
+  top: 5px;
+  right: 14px;
+  list-style-type: none;
+  padding: 0.2rem;
+  background-color: #232323;
+`;
+
+Menu.defaultProps = {
+  show: 'none',
+};
 
 export const MovieCard = ({
   title = 'Title',
   year = 'Year',
   genre = ['No genre'],
   image = 'https://www.publicdomainpictures.net/pictures/280000/nahled/not-found-image-15383864787lu.jpg',
+  handleEdit,
+  handleDelete,
 }: MovieCardProps) => {
+  const [showEllipsis, setShowEllipsis] = useState<'none' | 'block'>('none');
+  const [showMenu, setShowMenu] = useState<'none' | 'block'>('none');
   return (
-    <Container>
+    <Container
+      onMouseEnter={() => setShowEllipsis('block')}
+      onMouseLeave={() => setShowEllipsis('none')}
+    >
+      <EllipsisButton onClick={() => setShowMenu('block')} show={showEllipsis}>
+        <Ellipsis />
+      </EllipsisButton>
+      <Menu show={showMenu}>
+        <li
+          onClickCapture={() => setShowMenu('none')}
+          style={{ display: 'flex', justifyContent: 'flex-end' }}
+        >
+          X
+        </li>
+        <li onClickCapture={() => handleEdit?.()}>Edit</li>
+        <li onClickCapture={() => handleDelete?.()}>Delete</li>
+      </Menu>
       <ImageContainer src={image} />
       <Row>
         <Text>{title}</Text>

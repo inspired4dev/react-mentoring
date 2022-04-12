@@ -6,6 +6,7 @@ import { ReactComponent as Image } from '../../assets/images/Bitmap.svg';
 export interface HeaderProps {
   children?: ReactNode;
   content?: boolean;
+  handleOnAdd?: () => void;
 }
 
 export const Container = styled.div`
@@ -26,7 +27,11 @@ const Row = styled.div`
   gap: 2rem;
 `;
 
-export const Header = ({ content, children }: HeaderProps): ReactElement => (
+export const Header = ({
+  content,
+  children,
+  handleOnAdd,
+}: HeaderProps): ReactElement => (
   <Container>
     {content ? (
       children
@@ -42,7 +47,9 @@ export const Header = ({ content, children }: HeaderProps): ReactElement => (
         />
         <Row>
           <h1>netflixroulette</h1>
-          <Button color='tertiary'>+ Add Movie</Button>
+          <Button onClick={() => handleOnAdd?.()} color='tertiary'>
+            + Add Movie
+          </Button>
         </Row>
         <Row>
           <Input transparency placeholder='What do you want to watch?' />

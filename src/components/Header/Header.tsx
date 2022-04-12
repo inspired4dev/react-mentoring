@@ -40,7 +40,7 @@ export const Header = ({
         <Image
           style={{
             position: 'absolute',
-            'z-index': '0',
+            zIndex: '0',
             top: '0',
             right: '0',
           }}

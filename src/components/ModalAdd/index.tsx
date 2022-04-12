@@ -1,1 +1,1 @@
-export { ModalAdd } from './ModalAdd';
+export { ModalAdd, Text, Column, Row } from './ModalAdd';
